@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cowboys Texan BBQ — Leigh-on-Sea</title>
+<style>
+
+  /* ============ TOKENS ============ */
+  :root{
+    --char-black:#1A1410;
+    --leather:#2E1F16;
+    --leather-light:#3D2A1C;
+    --cowboy-red:#C8312B;
+    --denim:#1E3A5F;
+    --tallow:#F5E6C8;
+    --tallow-dim:#D9C6A0;
+    --embers:#E8742E;
+    --rope-tan:#C9A876;
+
+    --font-display: 'Rockwell', 'Roboto Slab', Georgia, serif;
+    --font-body: 'Avenir Next', 'Helvetica Neue', Arial, sans-serif;
+
+    --radius-board: 4px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--char-black);
+    color:var(--tallow);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+
+  :focus-visible{
+    outline:3px solid var(--embers);
+    outline-offset:3px;
+  }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+  /* ============ TOP STRIP ============ */
+  .reopen-banner{
+    background:var(--cowboy-red);
+    color:var(--tallow);
+    font-family:var(--font-body);
+    font-weight:700;
+    letter-spacing:.04em;
+    font-size:13px;
+    text-align:center;
+    padding:10px 16px;
+    position:relative;
+    z-index:50;
+  }
+  .reopen-banner a{ text-decoration:underline; text-underline-offset:3px; }
+
+  /* ============ NAV ============ */
+  header{
+    position:sticky;
+    top:0;
+    z-index:40;
+    background:rgba(26,20,16,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(245,230,200,0.12);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:76px;
+  }
+  .logo-mark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:22px;
+    letter-spacing:.03em;
+    color:var(--tallow);
+  }
+  .logo-mark .skull-icon{ flex-shrink:0; }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .nav-links a{
+    position:relative;
+    padding:6px 0;
+    color:var(--tallow-dim);
+    transition:color .2s;
+  }
+  .nav-links a:hover{ color:var(--embers); }
+  .nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0; right:100%;
+    bottom:0;
+    height:2px;
+    background:var(--embers);
+    transition:right .25s ease;
+  }
+  .nav-links a:hover::after{ right:0; }
+
+  .nav-cta{
+    background:var(--embers);
+    color:var(--char-black);
+    font-weight:800;
+    font-size:14px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:11px 22px;
+    border-radius:3px;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .nav-cta:hover{ transform:translateY(-1px); box-shadow:0 4px 14px rgba(232,116,46,0.35); }
+
+  .nav-toggle{ display:none; background:none; border:none; color:var(--tallow); font-size:26px; cursor:pointer; }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 20%, rgba(232,116,46,0.16), transparent 60%),
+      linear-gradient(180deg, #120D0A 0%, var(--char-black) 55%, #100C09 100%);
+    padding:120px 24px 100px;
+  }
+
+  /* smoke layer */
+  .smoke{
+    position:absolute; inset:0;
+    pointer-events:none;
+    opacity:.5;
+    mix-blend-mode:screen;
+  }
+  .smoke span{
+    position:absolute;
+    bottom:-10%;
+    width:340px; height:340px;
+    background:radial-gradient(circle, rgba(245,230,200,0.08), transparent 70%);
+    border-radius:50%;
+    animation:drift 22s linear infinite;
+  }
+  .smoke span:nth-child(1){ left:8%; animation-delay:0s; width:260px; height:260px;}
+  .smoke span:nth-child(2){ left:55%; animation-delay:-8s; width:420px; height:420px;}
+  .smoke span:nth-child(3){ left:78%; animation-delay:-15s; width:300px; height:300px;}
+  @keyframes drift{
+    0%{ transform:translateY(0) translateX(0) scale(1); opacity:0;}
+    15%{ opacity:.6;}
+    100%{ transform:translateY(-120vh) translateX(40px) scale(1.4); opacity:0;}
+  }
+
+  .hero-eyebrow{
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--embers);
+    margin-bottom:22px;
+  }
+
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(48px, 9vw, 108px);
+    line-height:.95;
+    letter-spacing:-0.01em;
+    color:var(--tallow);
+    text-shadow:0 2px 0 rgba(0,0,0,0.4), 0 30px 60px rgba(232,116,46,0.12);
+  }
+  .hero h1 .accent{ color:var(--cowboy-red); }
+
+  .hero p.sub{
+    margin-top:24px;
+    font-size:clamp(17px,2.4vw,21px);
+    color:var(--tallow-dim);
+    max-width:560px;
+    margin-left:auto; margin-right:auto;
+    font-weight:400;
+  }
+
+  .hero-ctas{
+    margin-top:42px;
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:16px 32px;
+    font-weight:800;
+    font-size:15px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    border-radius:3px;
+    transition:transform .18s, box-shadow .18s, background .18s;
+  }
+  .btn-primary{ background:var(--embers); color:var(--char-black); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(232,116,46,0.35); }
+  .btn-ghost{ background:transparent; color:var(--tallow); border:2px solid rgba(245,230,200,0.35); }
+  .btn-ghost:hover{ border-color:var(--tallow); background:rgba(245,230,200,0.06); }
+
+  .hero-status{
+    margin-top:54px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--tallow-dim);
+    font-weight:700;
+  }
+  .dot{ width:8px; height:8px; border-radius:50%; background:#5FBE6B; box-shadow:0 0 10px #5FBE6B; }
+
+  /* ============ SECTION LABEL (board) — SIGNATURE COMPONENT ============ */
+  .board-wrap{
+    display:flex;
+    justify-content:center;
+    margin:0 0 56px;
+    padding:0 24px;
+  }
+  .board{
+    position:relative;
+    background:
+      repeating-linear-gradient(90deg, var(--leather) 0px, var(--leather-light) 3px, var(--leather) 6px),
+      var(--leather);
+    border:1px solid rgba(0,0,0,0.5);
+    box-shadow:
+      inset 0 0 0 1px rgba(245,230,200,0.06),
+      0 18px 40px rgba(0,0,0,0.55);
+    padding:22px 46px;
+    border-radius:var(--radius-board);
+    transform:rotate(-0.6deg);
+  }
+  .board::before, .board::after{
+    content:"";
+    position:absolute;
+    top:-26px;
+    width:3px; height:34px;
+    background:var(--rope-tan);
+    border-radius:2px;
+  }
+  .board::before{ left:18px; transform:rotate(-8deg); }
+  .board::after{ right:18px; transform:rotate(8deg); }
+  .board h2{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(26px,4vw,38px);
+    letter-spacing:.02em;
+    color:var(--tallow);
+    text-align:center;
+    text-shadow:0 2px 0 rgba(0,0,0,0.5);
+  }
+  .board .board-sub{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--embers);
+    margin-top:4px;
+    font-weight:700;
+    font-family:var(--font-body);
+  }
+
+  /* ============ SECTIONS ============ */
+  section{ padding:90px 0; position:relative; }
+  .section-alt{ background:linear-gradient(180deg, transparent, rgba(0,0,0,0.18), transparent); }
+
+  /* MENU GRID */
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px;
+  }
+  @media (min-width:760px){
+    .menu-grid{ grid-template-columns:repeat(4, 1fr); }
+  }
+  .dish{
+    background:var(--leather);
+    border-radius:var(--radius-board);
+    overflow:hidden;
+    border:1px solid rgba(245,230,200,0.08);
+    transition:transform .25s, box-shadow .25s;
+  }
+  .dish:hover{ transform:translateY(-6px); box-shadow:0 16px 30px rgba(0,0,0,0.45); }
+  .dish-photo{
+    aspect-ratio:4/3;
+    background:linear-gradient(135deg, #4a2e1c, #2a1a10);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    color:rgba(245,230,200,0.35);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+  .dish-body{ padding:18px 18px 22px; }
+  .dish-body h3{
+    font-family:var(--font-display);
+    font-size:19px;
+    color:var(--tallow);
+    margin-bottom:6px;
+  }
+  .dish-body p{
+    font-size:13.5px;
+    color:var(--tallow-dim);
+    line-height:1.5;
+  }
+  .dish-tag{
+    display:inline-block;
+    margin-top:10px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--embers);
+  }
+
+  .menu-foot{
+    text-align:center;
+    margin-top:46px;
+  }
+
+  /* STORY SPLIT */
+  .story{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:48px;
+    align-items:center;
+  }
+  @media (min-width:860px){
+    .story{ grid-template-columns:1fr 1fr; }
+  }
+  .story-copy .eyebrow{
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--embers);
+    margin-bottom:18px;
+  }
+  .story-copy h2{
+    font-family:var(--font-display);
+    font-size:clamp(30px,4vw,42px);
+    line-height:1.1;
+    margin-bottom:22px;
+    color:var(--tallow);
+  }
+  .story-copy p{
+    color:var(--tallow-dim);
+    font-size:16.5px;
+    margin-bottom:16px;
+    max-width:480px;
+  }
+  .story-photo{
+    aspect-ratio:1/1;
+    background:linear-gradient(135deg, #3a2517, #1f140d);
+    border-radius:6px;
+    border:1px solid rgba(245,230,200,0.08);
+    position:relative;
+    overflow:hidden;
+  }
+  .story-photo::before{
+    content:"PHOTO: PEOPLE ROUND THE TABLE";
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:20px;
+    font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    color:rgba(245,230,200,0.3);
+  }
+  .story-stats{
+    display:flex;
+    gap:36px;
+    margin-top:30px;
+    flex-wrap:wrap;
+  }
+  .stat strong{
+    display:block;
+    font-family:var(--font-display);
+    font-size:30px;
+    color:var(--embers);
+  }
+  .stat span{
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--tallow-dim);
+  }
+
+  /* FIND US */
+  .find-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+  @media (min-width:860px){
+    .find-grid{ grid-template-columns:1.1fr .9fr; }
+  }
+  .map-block{
+    aspect-ratio:16/11;
+    background:linear-gradient(135deg, #233044, #14202f);
+    border-radius:6px;
+    border:1px solid rgba(245,230,200,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:rgba(245,230,200,0.35);
+    font-size:13px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    text-align:center;
+    padding:24px;
+  }
+  .info-card{
+    background:var(--leather);
+    border-radius:6px;
+    border:1px solid rgba(245,230,200,0.08);
+    padding:34px;
+  }
+  .info-card h3{
+    font-family:var(--font-display);
+    font-size:22px;
+    color:var(--tallow);
+    margin-bottom:18px;
+  }
+  .info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:11px 0;
+    border-bottom:1px solid rgba(245,230,200,0.08);
+    font-size:14.5px;
+  }
+  .info-row:last-child{ border-bottom:none; }
+  .info-row span:first-child{ color:var(--tallow-dim); }
+  .info-row span:last-child{ font-weight:700; }
+  .info-row .closed{ color:var(--cowboy-red); }
+  .info-card .btn{ width:100%; justify-content:center; margin-top:22px; }
+
+  /* FOOTER */
+  footer{
+    border-top:1px solid rgba(245,230,200,0.1);
+    padding:56px 0 36px;
+    background:#120D0A;
+  }
+  .footer-top{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:32px;
+    margin-bottom:40px;
+  }
+  .footer-brand .logo-mark{ margin-bottom:14px; }
+  .footer-brand p{ color:var(--tallow-dim); font-size:14px; max-width:300px; }
+  .footer-cols{ display:flex; gap:48px; flex-wrap:wrap; }
+  .footer-col h4{
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--embers); margin-bottom:14px; font-weight:800;
+  }
+  .footer-col a{
+    display:block;
+    color:var(--tallow-dim);
+    font-size:14px;
+    margin-bottom:10px;
+    transition:color .2s;
+  }
+  .footer-col a:hover{ color:var(--tallow); }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    padding-top:28px;
+    border-top:1px solid rgba(245,230,200,0.08);
+    font-size:12.5px;
+    color:rgba(217,198,160,0.5);
+  }
+  .social-row{ display:flex; gap:16px; }
+  .social-row a{ color:var(--tallow-dim); font-size:13px; font-weight:700; }
+
+  /* responsive nav */
+  @media (max-width:760px){
+    .nav-links{
+      position:fixed;
+      top:76px; left:0; right:0;
+      background:var(--char-black);
+      flex-direction:column;
+      gap:0;
+      padding:8px 24px 20px;
+      border-bottom:1px solid rgba(245,230,200,0.12);
+      transform:translateY(-110%);
+      transition:transform .25s ease;
+    }
+    .nav-links.open{ transform:translateY(0); }
+    .nav-links a{ padding:14px 0; border-bottom:1px solid rgba(245,230,200,0.06); width:100%; }
+    .nav-toggle{ display:block; }
+    .nav-cta{ display:none; }
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="reopen-banner">
+    🔥 We're mid-refurb &amp; reopening soon — <a href="#find">follow our journey for the exact date</a>
+  </div>
+
+  <header>
+    <nav class="wrap">
+      <a href="#top" class="logo-mark">
+        <svg class="skull-icon" width="26" height="26" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M50 20 C20 20 10 45 25 60 C20 65 15 78 22 85 C28 80 32 72 35 68 C40 72 45 74 50 74 C55 74 60 72 65 68 C68 72 72 80 78 85 C85 78 80 65 75 60 C90 45 80 20 50 20 Z" fill="var(--tallow)"/>
+          <circle cx="38" cy="48" r="5" fill="var(--char-black)"/>
+          <circle cx="62" cy="48" r="5" fill="var(--char-black)"/>
+        </svg>
+        COWBOYS
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#menu">Menu</a>
+        <a href="#story">Our Story</a>
+        <a href="#find">Find Us</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="#find" class="nav-cta">Find Us</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <div class="smoke" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div>
+        <p class="hero-eyebrow">Leigh-on-Sea, Essex</p>
+        <h1>Slow smoke.<br>Big <span class="accent">flavour.</span></h1>
+        <p class="sub">16-hour oak-smoked brisket, beef ribs and all the Texan sides — cooked the proper way, served with a grin, right here on London Road.</p>
+        <div class="hero-ctas">
+          <a href="#menu" class="btn btn-primary">See the Menu</a>
+          <a href="#find" class="btn btn-ghost">Find Us</a>
+        </div>
+        <div class="hero-status"><span class="dot"></span> Refurb in progress — reopening soon</div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="board-wrap">
+        <div class="board">
+          <h2>What We Smoke</h2>
+          <span class="board-sub">Pick your meat, choose your heat</span>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="menu-grid">
+          <div class="dish">
+            <div class="dish-photo">Brisket photo</div>
+            <div class="dish-body">
+              <h3>16hr Brisket</h3>
+              <p>Oak-smoked low &amp; slow till it falls apart.</p>
+              <span class="dish-tag">Signature</span>
+            </div>
+          </div>
+          <div class="dish">
+            <div class="dish-photo">Beef ribs photo</div>
+            <div class="dish-body">
+              <h3>Smoked Beef Ribs</h3>
+              <p>8 hours in the smoker, fall-off-the-bone.</p>
+              <span class="dish-tag">Big plate</span>
+            </div>
+          </div>
+          <div class="dish">
+            <div class="dish-photo">Wings photo</div>
+            <div class="dish-body">
+              <h3>Buffalo Wings</h3>
+              <p>Classic heat, properly sauced.</p>
+              <span class="dish-tag">Sharer</span>
+            </div>
+          </div>
+          <div class="dish">
+            <div class="dish-photo">Hot dog photo</div>
+            <div class="dish-body">
+              <h3>Texan Hot Dog</h3>
+              <p>Loaded, smoky, no apologies.</p>
+              <span class="dish-tag">Classic</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-foot">
+          <a href="#" class="btn btn-primary">View Full Menu</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="section-alt">
+      <div class="wrap">
+        <div class="story">
+          <div class="story-copy">
+            <p class="eyebrow">Our Story</p>
+            <h2>Authentic Texan BBQ, made with Essex hospitality.</h2>
+            <p>Cowboys started with one idea: BBQ should take its time, and the people round the table should never feel rushed.</p>
+            <p>Every brisket goes into the smoker the night before. Every rib gets the same care whether it's a Tuesday lunch or a Saturday full house.</p>
+            <div class="story-stats">
+              <div class="stat"><strong>16hrs</strong><span>Smoked Brisket</span></div>
+              <div class="stat"><strong>100%</strong><span>Oak Smoked</span></div>
+              <div class="stat"><strong>1745</strong><span>London Road</span></div>
+            </div>
+          </div>
+          <div class="story-photo"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="find">
+      <div class="board-wrap">
+        <div class="board">
+          <h2>Find Us</h2>
+          <span class="board-sub">Saddle up &amp; come hungry</span>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="find-grid">
+          <div class="map-block">Map: 1745 London Road, Leigh-on-Sea, SS9 2SW</div>
+          <div class="info-card">
+            <h3>Opening Hours</h3>
+            <div class="info-row"><span>Mon – Tue</span><span class="closed">Closed</span></div>
+            <div class="info-row"><span>Wed – Thu</span><span>5pm – 10pm</span></div>
+            <div class="info-row"><span>Fri – Sat</span><span>12pm – 10pm</span></div>
+            <div class="info-row"><span>Sunday</span><span>12pm – 6pm</span></div>
+            <a href="#" class="btn btn-primary">Order for Collection</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#top" class="logo-mark">
+            <svg class="skull-icon" width="22" height="22" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+              <path d="M50 20 C20 20 10 45 25 60 C20 65 15 78 22 85 C28 80 32 72 35 68 C40 72 45 74 50 74 C55 74 60 72 65 68 C68 72 72 80 78 85 C85 78 80 65 75 60 C90 45 80 20 50 20 Z" fill="var(--tallow)"/>
+              <circle cx="38" cy="48" r="4" fill="#120D0A"/>
+              <circle cx="62" cy="48" r="4" fill="#120D0A"/>
+            </svg>
+            COWBOYS
+          </a>
+          <p>Authentic Texan BBQ in the heart of Leigh-on-Sea. Slow smoked, full hearted.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="#menu">Menu</a>
+            <a href="#story">Our Story</a>
+            <a href="#find">Find Us</a>
+          </div>
+          <div class="footer-col">
+            <h4>Visit</h4>
+            <a href="#">1745 London Road</a>
+            <a href="#">Leigh-on-Sea, SS9 2SW</a>
+            <a href="#">Get Directions</a>
+          </div>
+          <div class="footer-col">
+            <h4>Follow</h4>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">TikTok</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Cowboys Texan BBQ. All rights reserved.</span>
+        <div class="social-row">
+          <a href="#">Privacy</a>
+          <a href="#">Allergen Info</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      toggle.textContent = isOpen ? '✕' : '☰';
+    });
+  </script>
+
+</body>
+</html>
